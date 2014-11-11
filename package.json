@@ -1,5 +1,5 @@
 {
-    "name": "Enter name",
+    "name": "boylerplate",
     "version": "0.0.1",
     "author": "David Boyle",
     "dependencies": {
@@ -8,10 +8,11 @@
     },
     "engine": "node >= 0.10.x",
     "devDependencies": {
-        "grunt-notify": "^0.3.1"
+        "grunt-notify": "^0.3.1",
+        "grunt-contrib-sass": "^0.8.1"
     },
     "repository": {
         "type": "git",
-        "url": "Enter url"
+        "url": "https://github.com/spektraldevelopment/boylerplate.git"
     }
 }

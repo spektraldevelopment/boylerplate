@@ -18,8 +18,17 @@ module.exports = function(grunt) {
                     message: 'Changes made'
                 }
             }
+        },
+        sass: {
+            options: {
+                style: 'expanded'
+            },
+            dist: {
+                files: {
+                    'app/css/main.css': 'app/css/main.scss'
+                }
+            }
         }
-
     });
 
     grunt.event.on('watch', function(action, filepath, target) {
@@ -29,7 +38,9 @@ module.exports = function(grunt) {
     // Load the plugin that provides the "watch" task.
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-notify');
+    grunt.loadNpmTasks('grunt-contrib-sass');
 
     // Default task(s).
     grunt.registerTask('default', ['watch']);
+    grunt.registerTask('compile-sass', ['sass']);
 };

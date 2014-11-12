@@ -32,19 +32,15 @@ module.exports = function(grunt) {
             }
         },
         watch: {
-            livereload: {
-                // Here we watch the files the sass task will compile to
-                // These files are sent to the live reload server after sass compiles to them
-                options: { livereload: true },
-                files: ['app/**/*']
-            },
             build: {
                 files: ["src/**"],
-                tasks: ["build"]
+                tasks: ["build"],
+                options: { livereload: true }
             },
             specs: {
                 files: ["spec/**"],
-                tasks: ["jasmine"]
+                tasks: ["jasmine"],
+                options: { livereload: true }
             }
         },
         connect: {

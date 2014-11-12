@@ -19,6 +19,9 @@ module.exports = function(grunt) {
                 src: ["app/js/*.js", "!app/js/main.min.js"]
                 //You can add multiple ignore files
                 //"build/*.js", "!build/NodeMaker-min.js", "!build/Files.js"
+            },
+            sass: {
+                src: ["app/css/*.scss", "!main.css.map"]
             }
         },
         uglify: {
@@ -62,7 +65,6 @@ module.exports = function(grunt) {
                 }
             }
         },
-        ,
         notify: {
             reload: {
                 options: {
@@ -107,14 +109,42 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-notify');
 
     //REGISTER TASKS
+
     //Jasmine
     grunt.registerTask("test", ["jasmine"]);
+
     //Scripts
-    grunt.registerTask("scripts", "Uglifies and copies the Javascript files.", ["uglify", "clean:scripts"]);
+    grunt.registerTask(
+        "scripts", 
+        "Uglifies and copies the Javascript files.", 
+        ["uglify", "clean:scripts"]
+    );
+
+    //Sass
+    grunt.registerTask(
+        "compass",
+        "Compiles sass file to css.",
+        ["sass", "clean:sass"]
+    );
+
     //Build
-    grunt.registerTask("build-and-test", "Compiles all of the assets and copies the files to the app directory.", ["clean:build", "copy", "scripts", "jasmine"]);
+    grunt.registerTask(
+        "build-and-test", 
+        "Compiles all of the assets and copies the files to the app directory.", 
+        ["clean:build", "copy", "scripts", "jasmine"]
+    );
+
     //Build and Test
-    grunt.registerTask("build", "Compiles all of the assets and copies the files to the app directory.", ["clean:build", "copy", "scripts"]);
+    grunt.registerTask(
+        "build", 
+        "Compiles all of the assets and copies the files to the app directory.", 
+        ["clean:build", "copy", "scripts", "compass"]
+    );
+
     //Default - command: grunt default
-    grunt.registerTask("default", "Watches the project for changes, automatically builds them and runs a server.", ["build", "connect", "watch"]);
+    grunt.registerTask(
+        "default", 
+        "Watches the project for changes, automatically builds them and runs a server.", 
+        ["build", "connect", "watch"]
+    );
 };

@@ -17,6 +17,12 @@ module.exports = function(grunt) {
                 src: ["**"],
                 dest: "release",
                 expand: true
+            },
+            root: {
+                cwd: "bower_components/boylerplate",
+                src: ["**"],
+                dest: "",
+                expand: true
             }
         },
         clean: {
@@ -30,6 +36,9 @@ module.exports = function(grunt) {
             },
             sass: {
                 src: ["build/css/*.scss"]
+            },
+            root: {
+                src: ["bower_components/boylerplate"]
             }
         },
         uglify: {
@@ -180,6 +189,12 @@ module.exports = function(grunt) {
         "release",
         "Copies all files from build directory and removes any development related code, to make the files ready for release.",
         ["copy:release", "htmlbuild"]
+    );
+
+    grunt.registerTask(
+        "root",
+        "Moves boylerplate from bower_components directory to root directory of project.",
+        ["copy:root", "clean:root"]
     );
 
     //Default - command: grunt default

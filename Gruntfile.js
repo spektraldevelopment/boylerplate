@@ -2,26 +2,34 @@ module.exports = function(grunt) {
 
     // configure the tasks
     grunt.initConfig({
+        //Change path based on your requirements
+        buildPath: '/boylerplate/build/',
         pkg: grunt.file.readJSON("package.json"),
         copy: {
             build: {
                 cwd: "src",
                 src: ["**"],
-                dest: "app",
+                dest: "build",
+                expand: true
+            },
+            release: {
+                cwd: "build",
+                src: ["**"],
+                dest: "release",
                 expand: true
             }
         },
         clean: {
             build: {
-                src: ["app"]
+                src: ["build"]
             },
             scripts: {
-                src: ["app/js/*.js", "!app/js/main.min.js"]
+                src: ["build/js/*.js", "!build/js/main.min.js"]
                 //You can add multiple ignore files
                 //"build/*.js", "!build/NodeMaker-min.js", "!build/Files.js"
             },
             sass: {
-                src: ["app/css/*.scss", "!main.css.map"]
+                src: ["build/css/*.scss"]
             }
         },
         uglify: {
@@ -30,7 +38,7 @@ module.exports = function(grunt) {
                     mangle: true
                 },
                 files: {
-                    "app/js/main.min.js": ["app/js/main.js"]
+                    "build/js/main.min.js": ["build/js/main.js"]
                 }
             }
         },
@@ -47,11 +55,11 @@ module.exports = function(grunt) {
             }
         },
         connect: {
+            //Use if you don't already have a localhost setup
             server: {
                 options: {
-                    port: 4000,
-                    base: "app",
-                    hostname: "*"
+                    port: 9001,
+                    base: 'www-root'
                 }
             }
         },
@@ -79,7 +87,22 @@ module.exports = function(grunt) {
             },
             dist: {
                 files: {
-                    'app/css/main.css': 'src/css/main.scss'
+                    'build/css/main.css': 'src/css/main.scss'
+                }
+            }
+        },
+        open : {
+            dev : {
+                path: 'http://localhost<%= buildPath %>',
+                app: 'Google Chrome'
+            }
+        },
+        htmlbuild: {
+            dist: {
+                src: 'build/index.html',
+                dest: 'release/',
+                options: {
+                    beautify: true
                 }
             }
         }
@@ -107,6 +130,10 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-sass');
     //Desktop notifier
     grunt.loadNpmTasks('grunt-notify');
+    //Open
+    grunt.loadNpmTasks('grunt-open');
+    //HTML build
+    grunt.loadNpmTasks('grunt-html-build');
 
     //REGISTER TASKS
 
@@ -130,21 +157,35 @@ module.exports = function(grunt) {
     //Build
     grunt.registerTask(
         "build-and-test", 
-        "Compiles all of the assets and copies the files to the app directory.", 
-        ["clean:build", "copy", "scripts", "jasmine"]
+        "Compiles all of the assets and copies the files to the build directory.",
+        ["clean:build", "copy:build", "scripts", "compass", "jasmine"]
     );
 
     //Build and Test
     grunt.registerTask(
-        "build", 
-        "Compiles all of the assets and copies the files to the app directory.", 
-        ["clean:build", "copy", "scripts", "compass"]
+        "build",
+        "Compiles all of the assets and copies the files to the build directory.",
+        ["clean:build", "copy:build", "scripts", "compass"]
+    );
+
+    //Build and release
+    grunt.registerTask(
+        "build-release",
+        "Build the project and then creates a release version.",
+        ["build", "release"]
+    );
+
+    //Release
+    grunt.registerTask(
+        "release",
+        "Copies all files from build directory and removes any development related code, to make the files ready for release.",
+        ["copy:release", "htmlbuild"]
     );
 
     //Default - command: grunt default
     grunt.registerTask(
         "default", 
         "Watches the project for changes, automatically builds them and runs a server.", 
-        ["build", "connect", "watch"]
+        ["build", "open", "watch"]
     );
 };

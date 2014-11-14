@@ -1,3 +1,3 @@
 function init() {
-    console.log('init');
+    console.log('main init');
 }

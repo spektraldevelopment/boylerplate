@@ -5,6 +5,7 @@ module.exports = function(grunt) {
         //Change path based on your requirements
         buildPath: '/boylerplate/build/',
         pkg: grunt.file.readJSON("package.json"),
+        dot: true,
         copy: {
             build: {
                 cwd: "src",

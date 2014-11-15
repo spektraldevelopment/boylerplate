@@ -39,7 +39,7 @@ module.exports = function(grunt) {
                 src: ["build/css/*.scss"]
             },
             bower: {
-                src: ["bower_components", "bower.json"]
+                src: ["bower_components", "bower.json", "README.md"]
             }
         },
         uglify: {

@@ -114,6 +114,14 @@ module.exports = function(grunt) {
                     beautify: true
                 }
             }
+        },
+        shell: {
+            cd: {
+                command: 'cd ../../'
+            },
+            runclean: {
+                command: 'clean:bower'
+            }
         }
     });
 
@@ -143,6 +151,8 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-open');
     //HTML build
     grunt.loadNpmTasks('grunt-html-build');
+    //Shell
+    grunt.loadNpmTasks('grunt-shell');
 
     //REGISTER TASKS
 
@@ -195,7 +205,7 @@ module.exports = function(grunt) {
     grunt.registerTask(
         "root",
         "Moves boylerplate from bower_components directory to root directory of project.",
-        ["copy:root"]
+        ["copy:root", "shell:cd", "shell:runclean"]
     );
 
     //Clean bower

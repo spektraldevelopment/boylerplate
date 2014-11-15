@@ -120,7 +120,7 @@ module.exports = function(grunt) {
                 command: 'cd ../../'
             },
             runclean: {
-                command: 'clean:bower'
+                command: 'grunt clean:bower'
             }
         }
     });

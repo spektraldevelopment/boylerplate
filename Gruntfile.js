@@ -19,9 +19,9 @@ module.exports = function(grunt) {
                 expand: true
             },
             root: {
-                cwd: "bower_components/boylerplate",
+                cwd: "",
                 src: ["**"],
-                dest: "",
+                dest: "../../",
                 expand: true
             }
         },
@@ -37,8 +37,8 @@ module.exports = function(grunt) {
             sass: {
                 src: ["build/css/*.scss"]
             },
-            root: {
-                src: ["bower_components/boylerplate"]
+            bower: {
+                src: ["bower_components", "bower.json"]
             }
         },
         uglify: {
@@ -191,10 +191,18 @@ module.exports = function(grunt) {
         ["copy:release", "htmlbuild"]
     );
 
+    //Root
     grunt.registerTask(
         "root",
         "Moves boylerplate from bower_components directory to root directory of project.",
-        ["copy:root", "clean:root"]
+        ["copy:root"]
+    );
+
+    //Clean bower
+    grunt.registerTask(
+        "clean-bower",
+        "Cleans bower_components directory.",
+        ["clean:bower"]
     );
 
     //Default - command: grunt default

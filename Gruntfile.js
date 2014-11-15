@@ -122,6 +122,9 @@ module.exports = function(grunt) {
             },
             runclean: {
                 command: 'grunt clean-bower'
+            },
+            ignore: {
+                command: 'touch .gitignore'
             }
         }
     });
@@ -214,6 +217,12 @@ module.exports = function(grunt) {
         "clean-bower",
         "Cleans bower_components directory.",
         ["clean:bower"]
+    );
+
+    grunt.registerTask(
+        "ignore",
+        "Creates gitignore file.",
+        ["shell:ignore"]
     );
 
     //Default - command: grunt default

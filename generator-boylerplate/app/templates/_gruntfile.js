@@ -8,14 +8,14 @@ module.exports = function(grunt) {
         dot: true,
         copy: {
             build: {
-                cwd: "src",
+                cwd: "app",
                 src: ["**"],
                 dest: "build",
                 expand: true
             },
             release: {
                 cwd: "build",
-                src: ["**"],
+                app: ["**"],
                 dest: "release",
                 expand: true
             },
@@ -54,7 +54,7 @@ module.exports = function(grunt) {
         },
         watch: {
             build: {
-                files: ["src/**"],
+                files: ["app/**"],
                 tasks: ["build"],
                 options: { livereload: true }
             },
@@ -68,8 +68,31 @@ module.exports = function(grunt) {
             //Use if you don't already have a localhost setup
             server: {
                 options: {
-                    port: 9001,
-                    base: 'www-root'
+                    keepalive: true,
+                    open: true,
+                    port: 9999,
+                    base: 'www-root',
+                    middleware: function() {
+                        var middleware = [];
+                        //Example
+                        /*middleware.push(function(req, res, next) {
+                            if (req.url !== "/") return next();
+
+                            res.setHeader("Content-type", "text/html");
+                            var html = grunt.file.read("app/header.html");
+                            html += grunt.file.read("app/menu.html");
+
+                            var files = grunt.file.expand("app/sections/*.html");
+
+                            for (var i = 0; i < files.length; i++) {
+                                html += grunt.file.read(files[i]);
+                            }
+
+                            html += grunt.file.read("app/footer.html");
+                            res.end(html);
+                        });*/
+                        return middleware;
+                    }
                 }
             }
         },
@@ -97,7 +120,7 @@ module.exports = function(grunt) {
             },
             dist: {
                 files: {
-                    'build/css/main.css': 'src/css/main.scss'
+                    'build/css/main.css': 'app/css/main.scss'
                 }
             }
         },
@@ -115,22 +138,11 @@ module.exports = function(grunt) {
                     beautify: true
                 }
             }
-        },
-        shell: {
-            list: {
-                command: 'ls'
-            },
-            runclean: {
-                command: 'grunt clean-bower'
-            },
-            ignore: {
-                command: 'touch .gitignore'
-            }
         }
     });
 
     //EVENTS
-     grunt.event.on('watch', function(action, filepath, target) {
+    grunt.event.on('watch', function(action, filepath, target) {
         grunt.log.writeln(target + ': ' + filepath + ' has ' + action);
     });
 
@@ -155,8 +167,6 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-open');
     //HTML build
     grunt.loadNpmTasks('grunt-html-build');
-    //Shell
-    grunt.loadNpmTasks('grunt-shell');
 
     //REGISTER TASKS
 
@@ -165,8 +175,8 @@ module.exports = function(grunt) {
 
     //Scripts
     grunt.registerTask(
-        "scripts", 
-        "Uglifies and copies the Javascript files.", 
+        "scripts",
+        "Uglifies and copies the Javascript files.",
         ["uglify", "clean:scripts"]
     );
 
@@ -179,7 +189,7 @@ module.exports = function(grunt) {
 
     //Build
     grunt.registerTask(
-        "build-and-test", 
+        "build-and-test",
         "Compiles all of the assets and copies the files to the build directory.",
         ["clean:build", "copy:build", "scripts", "compass", "jasmine"]
     );
@@ -205,30 +215,10 @@ module.exports = function(grunt) {
         ["copy:release", "htmlbuild"]
     );
 
-    //Root
-    grunt.registerTask(
-        "root",
-        "Moves boylerplate from bower_components directory to root directory of project.",
-        ["copy:root"]
-    );
-
-    //Clean bower
-    grunt.registerTask(
-        "clean-bower",
-        "Cleans bower_components directory.",
-        ["clean:bower"]
-    );
-
-    grunt.registerTask(
-        "ignore",
-        "Creates gitignore file.",
-        ["shell:ignore"]
-    );
-
     //Default - command: grunt default
     grunt.registerTask(
-        "default", 
-        "Watches the project for changes, automatically builds them and runs a server.", 
+        "default",
+        "Watches the project for changes, automatically builds them and runs a server.",
         ["build", "open", "watch"]
     );
 };

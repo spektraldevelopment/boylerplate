@@ -3,6 +3,12 @@ var util = require('util');
 var path = require('path');
 var yeoman = require('yeoman-generator');
 var yosay = require('yosay');
+var destPath;
+
+function getProjDir() {
+    var split = destPath.split(/[ /]+/);
+    return split[split.length - 1];
+}
 
 var BoylerplateGenerator = yeoman.generators.Base.extend({
     promptUser: function() {
@@ -10,8 +16,6 @@ var BoylerplateGenerator = yeoman.generators.Base.extend({
 
         // have Yeoman greet the user
         console.log(this.yeoman);
-
-        console.log('path: ' + path);
 
         var prompts = [{
             name: 'appName',
@@ -33,9 +37,19 @@ var BoylerplateGenerator = yeoman.generators.Base.extend({
         this.mkdir("release");
     },
 
+    paths: function () {
+        destPath = this.destinationRoot();
+    },
+
     copyFiles: function() {
-        this.copy(".gitignore", ".gitignore")
-        this.copy("_gruntfile.js", "Gruntfile.js");
+        var context = {
+            buildPath:  getProjDir()
+        };
+
+        this.copy("gitignore", ".gitignore");
+
+        this.template("_gruntfile.js", "Gruntfile.js", context);
+
         this.copy("_package.json", "package.json");
         this.copy("_main.js", "app/js/main.js");
         this.copy("_main.scss", "app/css/main.scss");

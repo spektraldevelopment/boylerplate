@@ -2,8 +2,6 @@ module.exports = function(grunt) {
 
     // configure the tasks
     grunt.initConfig({
-        //Change path based on your requirements
-        buildPath: '/boylerplate/build/',
         pkg: grunt.file.readJSON("package.json"),
         dot: true,
         copy: {
@@ -126,7 +124,7 @@ module.exports = function(grunt) {
         },
         open : {
             dev : {
-                path: 'http://localhost<%= buildPath %>',
+                path: 'http://localhost/<%= buildPath %>/build/',
                 app: 'Google Chrome'
             }
         },

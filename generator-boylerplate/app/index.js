@@ -42,18 +42,23 @@ var BoylerplateGenerator = yeoman.generators.Base.extend({
     },
 
     copyFiles: function() {
-        var context = {
+        var gruntContext = {
             buildPath:  getProjDir()
+        };
+
+        var htmlContext = {
+            app_name: this.appName
         };
 
         this.copy("gitignore", ".gitignore");
 
-        this.template("_gruntfile.js", "Gruntfile.js", context);
+        this.template("_gruntfile.js", "Gruntfile.js", gruntContext);
 
         this.copy("_package.json", "package.json");
         this.copy("_main.js", "app/js/main.js");
         this.copy("_main.scss", "app/css/main.scss");
-        this.copy("_index.html", "app/index.html");
+
+        this.template("_index.html", "app/index.html", htmlContext);
     },
 
     runNpm: function(){

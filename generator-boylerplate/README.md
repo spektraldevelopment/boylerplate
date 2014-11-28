@@ -1,5 +1,3 @@
-# generator-boylerplate [![Build Status](https://secure.travis-ci.org/spektraldevelopment/generator-boylerplate.png?branch=master)](https://travis-ci.org/spektraldevelopment/generator-boylerplate)
-
 > [Yeoman](http://yeoman.io) generator
 
 

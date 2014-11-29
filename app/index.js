@@ -59,7 +59,7 @@ var BoylerplateGenerator = yeoman.generators.Base.extend({
         this.copy("_main.scss", "app/css/main.scss");
 
         this.template("_index.html", "app/index.html", htmlContext);
-        this.template("_README.md", "app/README.md", htmlContext);
+        this.template("_README.md", "README.md", htmlContext);
     },
 
     runNpm: function(){

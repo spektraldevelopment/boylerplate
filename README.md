@@ -33,6 +33,20 @@ Finally, initiate the generator:
 yo boylerplate
 ```
 
+###Manual install
+
+Clone this repo locally, once cloned terminal into boylerplate repo and type:
+
+```bash
+npm link
+```
+
+Once completed you may run the following command anywhere on your machine:
+
+```bash
+yo boylerplate
+```
+
 ### Getting To Know Yeoman
 
 Yeoman has a heart of gold. He's a person with feelings and opinions, but he's very easy to work with. If you think he's too opinionated, he can be easily convinced.

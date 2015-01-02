@@ -20,17 +20,28 @@ var BoylerplateGenerator = yeoman.generators.Base.extend({
         var prompts = [{
             name: 'appName',
             message: 'What is your app\'s name ?'
+        },{
+            type: 'confirm',
+            name: 'useGumby',
+            message: 'Would you like to use Gumby responsive framework?',
+            default: false
         }];
 
         this.prompt(prompts, function (props) {
             this.appName = props.appName;
+            this.useGumby = props.useGumby;
             done();
         }.bind(this));
     },
 
     createFolders: function() {
+
         this.mkdir("app");
-        this.mkdir("app/css");
+        if (this.useGumby === true) {
+            this.mkdir("app/sass")
+        } else {
+            this.mkdir("app/css");
+        }
         this.mkdir("app/js");
         this.mkdir("app/img");
         this.mkdir("build");
@@ -51,14 +62,24 @@ var BoylerplateGenerator = yeoman.generators.Base.extend({
         };
 
         this.copy("gitignore", ".gitignore");
-
-        this.template("_gruntfile.js", "Gruntfile.js", gruntContext);
-
         this.copy("_package.json", "package.json");
         this.copy("_main.js", "app/js/main.js");
-        this.copy("_main.scss", "app/css/main.scss");
 
-        this.template("_index.html", "app/index.html", htmlContext);
+        if (this.useGumby === true) {
+            this.template("gumby/_gruntfile.js", "Gruntfile.js", gruntContext);
+
+            this.directory("gumby/files/", "app", true);
+
+            this.copy("gumby/_config.rb", "config.rb");
+
+        } else {
+            this.template("_gruntfile.js", "Gruntfile.js", gruntContext);
+
+            this.copy("_main.scss", "app/css/main.scss");
+
+            this.template("_index.html", "app/index.html", htmlContext);
+        }
+
         this.template("_README.md", "README.md", htmlContext);
     },
 

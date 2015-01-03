@@ -67,16 +67,13 @@ var BoylerplateGenerator = yeoman.generators.Base.extend({
 
         if (this.useGumby === true) {
             this.template("gumby/_gruntfile.js", "Gruntfile.js", gruntContext);
-
             this.directory("gumby/files/", "app", true);
-
             this.copy("gumby/_config.rb", "config.rb");
+            this.template("gumby/_index.html", "app/index.html", htmlContext);
 
         } else {
             this.template("_gruntfile.js", "Gruntfile.js", gruntContext);
-
             this.copy("_main.scss", "app/css/main.scss");
-
             this.template("_index.html", "app/index.html", htmlContext);
         }
 

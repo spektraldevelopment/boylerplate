@@ -20,7 +20,12 @@ var BoylerplateGenerator = yeoman.generators.Base.extend({
         var prompts = [{
             name: 'appName',
             message: 'What is your app\'s name ?'
-        },{
+        },
+        {
+            name: 'desc',
+            message: 'Enter a description:'
+        },
+        {
             type: 'confirm',
             name: 'useGumby',
             message: 'Would you like to use Gumby responsive framework?',
@@ -29,6 +34,7 @@ var BoylerplateGenerator = yeoman.generators.Base.extend({
 
         this.prompt(prompts, function (props) {
             this.appName = props.appName;
+            this.desc = props.desc;
             this.useGumby = props.useGumby;
             done();
         }.bind(this));

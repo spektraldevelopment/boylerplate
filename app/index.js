@@ -26,32 +26,20 @@ var BoylerplateGenerator = yeoman.generators.Base.extend({
             message: 'Enter a description:'
         },
         {
-            type: 'confirm',
-            name: 'useGumby',
-            message: 'Would you like to use Gumby responsive framework?',
-            default: false
+            name: 'gitUrl',
+            message: 'Enter the git url: '
         }];
 
         this.prompt(prompts, function (props) {
             this.appName = props.appName;
             this.desc = props.desc;
-            this.useGumby = props.useGumby;
+            this.gitUrl = props.gitUrl;
             done();
         }.bind(this));
     },
 
     createFolders: function() {
-
-        this.mkdir("app");
-        if (this.useGumby === true) {
-            this.mkdir("app/sass")
-        } else {
-            this.mkdir("app/css");
-        }
-        this.mkdir("app/js");
-        this.mkdir("app/img");
-        this.mkdir("build");
-        this.mkdir("release");
+        this.mkdir("src/img");
     },
 
     paths: function () {
@@ -59,31 +47,32 @@ var BoylerplateGenerator = yeoman.generators.Base.extend({
     },
 
     copyFiles: function() {
-        var gruntContext = {
-            buildPath:  getProjDir()
+
+        var packageContext = {
+            app_name: this.appName,
+            desc: this.desc,
+            gitUrl: this.gitUrl
         };
 
         var htmlContext = {
             app_name: this.appName
         };
 
+        //Root files
         this.copy("gitignore", ".gitignore");
-        this.copy("_package.json", "package.json");
-        this.copy("_main.js", "app/js/main.js");
-
-        if (this.useGumby === true) {
-            this.template("gumby/_gruntfile.js", "Gruntfile.js", gruntContext);
-            this.directory("gumby/files/", "app", true);
-            this.copy("gumby/_config.rb", "config.rb");
-            this.template("gumby/_index.html", "app/index.html", htmlContext);
-
-        } else {
-            this.template("_gruntfile.js", "Gruntfile.js", gruntContext);
-            this.copy("_main.scss", "app/css/main.scss");
-            this.template("_index.html", "app/index.html", htmlContext);
-        }
-
+        this.template("_package.json", "package.json", packageContext);
+        this.template("_gulpfile.js", "gulpfile.js");
         this.template("_README.md", "README.md", htmlContext);
+
+        //SRC files
+        //JS
+        this.copy("_main.js", "src/js/main.js");
+        //SASS
+        this.copy("_mixins.scss", "src/sass/mixins.scss");
+        this.copy("_config.scss", "src/sass/config.scss");
+        this.copy("_main.scss", "src/sass/main.scss");
+        //HTML
+        this.template("_index.html", "src/index.html", htmlContext);
     },
 
     runNpm: function(){

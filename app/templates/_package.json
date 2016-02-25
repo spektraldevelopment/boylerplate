@@ -1,19 +1,19 @@
 {
   "name": "<%= app_name %>",
-  "version": "1.0.0",
-  "description": "A simple page used to display youtube videos.",
+  "version": "0.0.1",
+  "description": "<%= desc %>",
   "main": "gulpfile.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": ""
+    "url": "<%= gitUrl %>"
   },
   "author": "spektraldevelopment",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
-    "url": ""
+    "url": "<%= gitUrl %>/issues"
   },
   "homepage": "",
   "devDependencies": {

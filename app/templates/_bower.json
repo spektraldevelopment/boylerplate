@@ -1,0 +1,25 @@
+{
+  "name": "<%= app_name %>",
+  "description": "<%= desc %>",
+  "main": [
+    "src/js/main.js"
+  ],
+  "devDependencies": {
+    "jquery": "https://code.jquery.com/jquery-2.2.1.min.js"
+  },
+  "moduleType": [
+    "amd"
+  ],
+  "authors": [
+    "spektraldevelopment"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "private": true
+}

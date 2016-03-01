@@ -1,10 +1,14 @@
 {
   "name": "generator-boylerplate",
-  "version": "0.0.1",
-  "description": "Yeoman generator for boylerplate",
+  "version": "1.0.0",
+  "description": "My personal web app scaffolding.",
   "license": "MIT",
   "main": "app/index.js",
   "repository": "spektraldevelopment/generator-boylerplate",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/spektraldevelopment/boylerplate.git"
+  },
   "author": {
     "name": "spektraldevelopment",
     "email": "",
@@ -22,7 +26,10 @@
   "keywords": [
     "yeoman-generator",
     "boyle",
-    "boilerplate"
+    "boilerplate",
+    "boylerplate",
+    "gulp",
+    "bower"
   ],
   "dependencies": {
     "yeoman-generator": "^0.17.0",

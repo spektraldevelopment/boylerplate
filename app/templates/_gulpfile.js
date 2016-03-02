@@ -25,10 +25,10 @@ gulp.task('webpack', function() {
 // launch browser in a port
 gulp.task('open', function(){
   var options = {
-    url: 'http://localhost:' + port
+    uri: 'http://localhost:' + port
   };
   gulp.src('./dist/index.html')
-  .pipe(open('', options));
+  .pipe(open(options));
 });
 
 // live reload server
@@ -49,6 +49,7 @@ gulp.task('js', function () {
 // live reload html
 gulp.task('html', function () {
   gulp.src('./*.html')
+  gulp.src('./js/**/*.js')
     .pipe(connect.reload());
 });
 

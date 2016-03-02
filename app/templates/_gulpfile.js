@@ -2,7 +2,8 @@ var gulp = require('gulp'),
     connect = require('gulp-connect'),
     open = require("gulp-open"),
     webpack = require('gulp-webpack'),
-    concat = require('gulp-concat'),  
+    concat = require('gulp-concat'),
+    sass = require('gulp-sass'),  
     port = process.env.port || 3031;
 
 //copy static files to dist
@@ -23,8 +24,8 @@ gulp.task('webpack', function() {
 });
 
 //Compile sass
-gulp.task('sass', function () {
-  return gulp.src('./src/**/*.scss')
+gulp.task('compile-sass', function () {
+  gulp.src('./src/sass/main.scss')
     .pipe(sass().on('error', sass.logError))
     .pipe(gulp.dest('./dist/css'));
 });
@@ -53,6 +54,12 @@ gulp.task('js', function () {
     .pipe(connect.reload());
 });
 
+// live reload css
+gulp.task('css', function () {
+  gulp.src('./dist/**/*.css')
+    .pipe(connect.reload());
+});
+
 // live reload html
 gulp.task('html', function () {
   gulp.src('./dist/*.html')
@@ -63,8 +70,9 @@ gulp.task('html', function () {
 gulp.task('watch', function() {
     gulp.watch('src/index.html', ['copy', 'html']);
     gulp.watch('src/js/**/*.js', ['js', 'webpack']);
+    gulp.watch('src/sass/**/*.scss', ['compile-sass', 'css']);
 });
 
-gulp.task('default', ['copy', 'webpack', 'sass', 'connect', 'open', 'watch']);
+gulp.task('default', ['copy', 'webpack', 'compile-sass', 'connect', 'open', 'watch']);
 
 gulp.task('serve', ['connect', 'open', 'watch']);

@@ -5,7 +5,10 @@
     "src/js/main.js"
   ],
   "devDependencies": {
-    "jquery": "https://code.jquery.com/jquery-2.2.1.min.js"
+    "jquery": "https://code.jquery.com/jquery-2.2.1.min.js",
+    <% if (useBootstrap) { %>
+      "bootstrap-sass" : "https://github.com/twbs/bootstrap-sass.git"
+     <% } %>
   },
   "moduleType": [
     "amd"
